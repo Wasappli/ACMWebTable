@@ -33,8 +33,6 @@ const NSTimeInterval kACMWebTableDelayPreviousAndNextLoading = 0.2;
 - (ACMWebView*) buildNext;
 - (ACMWebView*) buildPrevious;
 
-@property BOOL animating;
-
 @end
 
 #pragma mark -

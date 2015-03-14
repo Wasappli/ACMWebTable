@@ -71,6 +71,7 @@ FOUNDATION_EXTERN const NSTimeInterval kACMWebTableDefaultAnimationTime;
 
 @property (nonatomic,weak) id<ACMWebTableDataSource> dataSource;
 @property (nonatomic,weak) id<ACMWebTableDelegate> delegate;
+@property BOOL animating;
 
 @end
 

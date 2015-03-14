@@ -80,6 +80,7 @@ NSString * const kACMWebViewTouchDownNotificationName = @"com.acmwebview.touchdo
 - (void) dealloc
 {
     [_titleView removeFromSuperview];
+    [_headerView removeFromSuperview];
 }
 
 #pragma mark Layout
