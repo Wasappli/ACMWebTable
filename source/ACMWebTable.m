@@ -156,6 +156,10 @@ const NSTimeInterval kACMWebTableDelayPreviousAndNextLoading = 0.2;
 
 #pragma mark UIScrollViewDelegate
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self.currentView setNeedsLayout];
+}
+
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView != self.currentView.scrollView) { // Comparison on pointers is fine in that case
         return;
