@@ -78,6 +78,9 @@ const NSTimeInterval kACMWebTableDelayPreviousAndNextLoading = 0.2;
     [self.currentView removeFromSuperview];
     [self.nextView removeFromSuperview];
     
+    self.previousView = nil;
+    self.currentView = nil;
+    self.nextView = nil;
     
     NSInteger currentIndex = self.currentIndex;
     ACMWebView *current = [self.dataSource viewForIndex:self.currentIndex];
@@ -91,21 +94,23 @@ const NSTimeInterval kACMWebTableDelayPreviousAndNextLoading = 0.2;
         self.previousView = nil;
     }
     
+    __weak typeof(self) weakSelf = self;
+    
     // Load next and previous with some delay
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kACMWebTableDelayPreviousAndNextLoading * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
         if (currentIndex > 0 ) {
-            ACMWebView *previous = [self buildPrevious];
-            self.previousView = previous;
+            ACMWebView *previous = [weakSelf buildPrevious];
+            weakSelf.previousView = previous;
         }
         
-        NSInteger count = [self.dataSource tableCount];
+        NSInteger count = [weakSelf.dataSource tableCount];
         if ( (currentIndex > -1) && (currentIndex < (count - 1)) ) {
-            ACMWebView *nextView = [self buildNext];
-            self.nextView = nextView;
+            ACMWebView *nextView = [weakSelf buildNext];
+            weakSelf.nextView = nextView;
         }
         
-        [self coldSetUpScroll:NO];
+        [weakSelf coldSetUpScroll:NO];
     });
     
     [self coldSetUpScroll:YES];
@@ -354,10 +359,10 @@ const NSTimeInterval kACMWebTableDelayPreviousAndNextLoading = 0.2;
                              CGRect currentFrame = currentSnapshot.frame;
                              CGFloat currentHeight = CGRectGetHeight(weakSelf.frame);
                              currentSnapshot.frame = CGRectMake(
-                                                            CGRectGetMinX(currentFrame),
-                                                            currentHeight + kACMWebTableOffScreenOffset,
-                                                            CGRectGetWidth(currentFrame),
-                                                            CGRectGetHeight(currentFrame) );
+                                                                CGRectGetMinX(currentFrame),
+                                                                currentHeight + kACMWebTableOffScreenOffset,
+                                                                CGRectGetWidth(currentFrame),
+                                                                CGRectGetHeight(currentFrame) );
                              weakCurrent.frame = currentSnapshot.frame;
 
                              CGRect previousFrame = weakPrevious.frame;
