@@ -111,7 +111,7 @@ static CGFloat nav_bar_height;
     return YES;
 }
 
-- (NSUInteger) supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask) supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskAll;
 }
 

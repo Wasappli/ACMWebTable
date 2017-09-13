@@ -119,9 +119,14 @@ NSString * const kACMWebViewTouchDownNotificationName = @"com.acmwebview.touchdo
     UIView *footer = self.footerView;
     if ( footer ) {
         CGRect footerFrame = footer.frame;
+        CGFloat yOffset = self.scrollView.contentSize.height;
+        if (@available(iOS 11.0, *)) {
+            yOffset += self.scrollView.safeAreaInsets.bottom;
+        }
+        
         footer.frame = CGRectMake(
                                   CGRectGetMinX(footerFrame),
-                                  self.scrollView.contentSize.height,
+                                  yOffset,
                                   CGRectGetWidth(footerFrame),
                                   CGRectGetHeight(footerFrame) );
     }
